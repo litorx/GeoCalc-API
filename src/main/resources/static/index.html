@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GeoCalc</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1 id="PrincipalTitle">GeoCalc</h1>
+        <h1 id="SecondTitle">The Geometric calculator</h1>
+        
+        <div class="form">
+            <h2>Circle</h2>
+            <img src="images/circle.png" alt="Circle" class="shape-image">
+            <input type="number" id="circleRadius" placeholder="Radius">
+            <button onclick="calculateCircleArea()">Calculate Area</button>
+            <button onclick="calculateCirclePerimeter()">Calculate Perimeter</button>
+            <p id="circleResult"></p>
+        </div>
+        
+        <div class="form">
+            <h2>Cone</h2>
+            <img src="images/cone.png" alt="Cone" class="shape-image">
+            <input type="number" id="coneRadius" placeholder="Radius">
+            <input type="number" id="coneHeight" placeholder="Height">
+            <button onclick="calculateConeVolume()">Calculate Volume</button>
+            <p id="coneResult"></p>
+        </div>
+        
+        <div class="form">
+            <h2>Hexagon</h2>
+            <img src="images/hexagon.png" alt="Hexagon" class="shape-image">
+            <input type="number" id="hexagonSide" placeholder="Side">
+            <button onclick="calculateHexagonArea()">Calculate Area</button>
+            <button onclick="calculateHexagonPerimeter()">Calculate Perimeter</button>
+            <p id="hexagonResult"></p>
+        </div>
+        
+        <div class="form">
+            <h2>Cube</h2>
+            <img src="images/cube.png" alt="Cube" class="shape-image">
+            <input type="number" id="cubeSide" placeholder="Side">
+            <button onclick="calculateCubeVolume()">Calculate Volume</button>
+            <button onclick="calculateCubeSurfaceArea()">Calculate Surface Area</button>
+            <p id="cubeResult"></p>
+        </div>
+    </div>
+
+    <script>
+        function formatResult(value) {
+            return value.toFixed(2);
+        }
+
+        function calculateCircleArea() {
+            const radius = document.getElementById('circleRadius').value;
+            fetch('http://localhost:8080/circle/area', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ radius: parseFloat(radius) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('circleResult').innerText = 'Area: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function calculateCirclePerimeter() {
+            const radius = document.getElementById('circleRadius').value;
+            fetch('http://localhost:8080/circle/perimeter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ radius: parseFloat(radius) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('circleResult').innerText = 'Perimeter: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function calculateConeVolume() {
+            const radius = document.getElementById('coneRadius').value;
+            const height = document.getElementById('coneHeight').value;
+            fetch('http://localhost:8080/cone/volume', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ radius: parseFloat(radius), height: parseFloat(height) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('coneResult').innerText = 'Volume: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function calculateHexagonArea() {
+            const side = document.getElementById('hexagonSide').value;
+            fetch('http://localhost:8080/hexagon/area', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ side: parseFloat(side) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('hexagonResult').innerText = 'Area: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function calculateHexagonPerimeter() {
+            const side = document.getElementById('hexagonSide').value;
+            fetch('http://localhost:8080/hexagon/perimeter', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ side: parseFloat(side) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('hexagonResult').innerText = 'Perimeter: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function calculateCubeVolume() {
+            const side = document.getElementById('cubeSide').value;
+            fetch('http://localhost:8080/cube/volume', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ side: parseFloat(side) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cubeResult').innerText = 'Volume: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function calculateCubeSurfaceArea() {
+            const side = document.getElementById('cubeSide').value;
+            fetch('http://localhost:8080/cube/surface-area', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ side: parseFloat(side) })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('cubeResult').innerText = 'Surface Area: ' + formatResult(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
